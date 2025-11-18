@@ -1,0 +1,5 @@
+Flask
+Flask_SQLAlchemy
+werkzeug
+scikit-learn
+joblib
