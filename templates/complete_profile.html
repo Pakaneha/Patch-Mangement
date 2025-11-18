@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete Your Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .field-group { margin-bottom: 14px; }
+    </style>
+    <script>
+      function validateProfileForm() {
+        var email = document.forms["profileForm"]["email"].value.trim();
+        var mobile = document.forms["profileForm"]["mobile"].value.trim();
+        if (!email && !mobile) {
+            alert("Please enter either an email or mobile number.");
+            return false;
+        }
+        if (mobile && !/^\d{10,15}$/.test(mobile.replace(/\D/g,''))) {
+            alert("Please enter a valid mobile number (digits only, 10-15 digits).");
+            return false;
+        }
+        return true;
+      }
+    </script>
+</head>
+<body>
+<div class="container" style="max-width:500px;">
+    <h2>Complete Your Profile</h2>
+    {% if error %}
+        <div class="status-error" style="margin-bottom: 13px;">{{ error }}</div>
+    {% endif %}
+    <form method="POST" name="profileForm" onsubmit="return validateProfileForm();">
+        <div class="field-group">
+            <label>Email:</label>
+            <input name="email" type="email" value="{{ user.email if user.email else '' }}" autocomplete="email">
+        </div>
+        <div class="field-group">
+            <label>Mobile Number:</label>
+            <input name="mobile" type="tel" pattern="\d{10,15}" value="{{ user.mobile if user.mobile else '' }}" autocomplete="tel" placeholder="Digits only">
+        </div>
+        <div class="field-group">
+            <label>Name:</label>
+            <input name="name" value="{{ user.name if user.name else '' }}">
+        </div>
+        <div class="field-group">
+            <label>Gender:</label>
+            <input name="gender" value="{{ user.gender if user.gender else '' }}">
+        </div>
+        <div class="field-group">
+            <label>Address:</label>
+            <input name="address" value="{{ user.address if user.address else '' }}">
+        </div>
+        <button type="submit" class="btn">Save Profile</button>
+    </form>
+</div>
+</body>
+</html>

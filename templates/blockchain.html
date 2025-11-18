@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blockchain Status</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .blockbox { padding: 16px; margin-bottom: 16px; background: #f6f6fa; border-radius: 8px; border: 1px solid #e3e3f0;}
+        .blockchain-actions { margin-top: 20px; }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width:700px;">
+    <h2>Blockchain Status</h2>
+    {% if blocks|length == 1 %}
+        <p>No patches submitted yet! Genesis block only.</p>
+    {% endif %}
+    {% for block in blocks %}
+      <div class="blockbox">
+        <b>Block #{{ block.index }}</b>
+        <p><b>Time:</b> {{ block.timestamp }}</p>
+        <p><b>Hash:</b> {{ block.hash }}</p>
+        {% if block.data.get('patch_message') %}
+          <p><b>Patch Message:</b> {{ block.data['patch_message'] }}</p>
+        {% endif %}
+        {% if block.data.get('diff_code') %}
+          <p><b>Diff Code:</b><br>{{ block.data['diff_code']|e }}</p>
+        {% endif %}
+        {% if block.data.get('status') %}
+          <p><b>Status:</b> {{ block.data['status'] }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <div class="blockchain-actions">
+      <a href="{{ url_for('profile') }}" class="btn">Profile Page</a>
+      <a href="{{ url_for('upload_patch') }}" class="btn">Patch Entry Page</a>
+      <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+</div>
+</body>
+</html>

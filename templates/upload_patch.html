@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patch Entry & Navigation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .patch-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .patch-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width: 600px;">
+    <h2>Patch Entry</h2>
+    <div class="patch-actions">
+        <a href="{{ url_for('profile') }}" class="btn">Profile Page</a>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+    <form method="POST" action="{{ url_for('predict_patch') }}">
+        <label>Patch Message:</label><br>
+        <input name="commit_message" required><br><br>
+        <label>Diff Code:</label><br>
+        <textarea name="diff_code" rows="8" cols="60" required></textarea><br><br>
+        <button type="submit" class="btn">Submit Patch</button>
+    </form>
+</div>
+</body>
+</html>

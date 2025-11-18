@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Patch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2>🔹 Enter Patch Details Below</h2>
+    <form action="{{ url_for('predict_patch') }}" method="post">
+        <label>Patch Commit Message:</label>
+        <textarea name="commit_message" rows="4" placeholder="Enter the patch commit message" required></textarea>
+        <label>Patch Diff Code:</label>
+        <textarea name="diff_code" rows="8" placeholder="Paste the diff snippet with + and - lines" required></textarea>
+        <button type="submit" class="btn">Check Patch</button>
+    </form>
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+</div>
+</body>
+</html>

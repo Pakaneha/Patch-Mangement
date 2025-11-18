@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .login-actions { display: flex; gap:10px; margin-top: 14px; }
+        @media (max-width:600px) { .login-actions { flex-direction: column; gap:12px; } }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width:400px;">
+    <h2>Login</h2>
+    {% if error %}
+        <div class="status-error" style="margin-bottom:13px;">{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+        <label>Email or Mobile Number:</label>
+        <input name="info" required><br>
+        <label>Password:</label>
+        <input type="password" name="password" required><br>
+        <button type="submit" class="btn" style="margin-top:12px;">Login</button>
+    </form>
+    <div class="login-actions">
+        <a href="{{ url_for('signup') }}" class="btn">Go to Sign Up</a>
+        <a href="{{ url_for('forgot_password') }}" class="btn">Forgot Password?</a>
+    </div>
+</div>
+</body>
+</html>

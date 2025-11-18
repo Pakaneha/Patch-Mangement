@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+      .field-group { margin-bottom: 16px; }
+      .otp-actions { display:flex; gap:10px; }
+      @media (max-width:600px){ .otp-actions { flex-direction:column; gap:12px; } }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width:500px;">
+    <h2>OTP Verification</h2>
+    {% if error %}
+      <div class="status-error" style="margin-bottom:13px;">
+        {{ error }}<br>
+        <span style="color:#222; font-size:16px;">Please verify again with these details:</span>
+      </div>
+    {% endif %}
+    {% if show_otp %}
+      <div class="status-success" style="margin-bottom:13px;">
+        <b>Your OTP (demo):</b> {{ show_otp }}
+      </div>
+    {% endif %}
+    <form method="POST" action="{% if editing %}{{ url_for('save_profile') }}{% else %}{{ url_for('verify_otp') }}{% endif %}">
+        <input type="hidden" name="info" value="{{ info }}">
+        <div class="field-group">
+          <label>OTP (sent to your selected contact):</label>
+          <input name="otp" required>
+        </div>
+        {% if not editing %}
+          <div class="field-group">
+              <label>New Password:</label>
+              <input type="password" name="new_password" required>
+          </div>
+        {% endif %}
+        {% if editing %}
+          <input type="hidden" name="editing" value="true">
+          <input type="hidden" name="name" value="{{ user.name }}">
+          <input type="hidden" name="gender" value="{{ user.gender }}">
+          <input type="hidden" name="address" value="{{ user.address }}">
+          <input type="hidden" name="email" value="{{ user.email }}">
+          <input type="hidden" name="mobile" value="{{ user.mobile }}">
+        {% endif %}
+        <div class="otp-actions">
+          <button type="submit" class="btn">Verify & Save</button>
+          <a href="{% if editing %}{{ url_for('profile') }}{% else %}{{ url_for('login') }}{% endif %}" class="btn">Cancel</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

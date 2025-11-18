@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .profile-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        @media (max-width: 600px) {
+            .profile-actions {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width:500px;">
+    {% if success %}
+      <div class="status-success" style="margin-bottom:13px;">
+        Details submitted successfully!
+      </div>
+    {% endif %}
+    <h2 style="margin-bottom:24px;">Your Profile</h2>
+    <p><b>Name:</b> {{ user.name }}</p>
+    <p><b>Email:</b> {{ user.email if user.email else "Not Provided" }}</p>
+    <p><b>Mobile:</b> {{ user.mobile if user.mobile else "Not Provided" }}</p>
+    <p><b>Gender:</b> {{ user.gender if user.gender else "Not Provided" }}</p>
+    <p><b>Address:</b> {{ user.address if user.address else "Not Provided" }}</p>
+    <div class="profile-actions">
+        <form action="{{ url_for('edit_profile') }}" method="GET" style="margin:0;">
+            <button type="submit" class="btn">Edit Details</button>
+        </form>
+        <a href="{{ url_for('upload_patch') }}" class="btn">Patch Entry Page</a>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+</div>
+</body>
+</html>

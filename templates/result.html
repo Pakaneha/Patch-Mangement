@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patch Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h2>🔍 Patch Analysis Result</h2>
+    {% if block %}
+        <div class="status-success">{{ result }}</div>
+        <h3>Stored in Blockchain:</h3>
+        <ul>
+            <li><strong>Index:</strong> {{ block.index }}</li>
+            <li><strong>Timestamp:</strong> {{ block.timestamp }}</li>
+            <li><strong>Commit Message:</strong> {{ block.data.patch_message }}</li>
+            <li><strong>Diff Code:</strong> <pre>{{ block.data.diff_code }}</pre></li>
+            <li><strong>Status:</strong> <span style="color: green;">{{ block.data.status }}</span></li>
+            <li><strong>Hash:</strong> {{ block.hash }}</li>
+        </ul>
+    {% else %}
+        <div class="status-error">{{ result }}</div>
+    {% endif %}
+    <a href="{{ url_for('upload_patch') }}" class="btn">Submit Another Patch</a>
+    <a href="{{ url_for('blockchain') }}" class="btn">View Blockchain</a>
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+</div>
+</body>
+</html>

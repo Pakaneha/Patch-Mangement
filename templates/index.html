@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patch App Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .home-actions { display: flex; gap: 16px; margin-top: 32px; }
+        @media (max-width:600px){ .home-actions { flex-direction:column; gap:16px; } }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width:600px;">
+    <h1>Welcome to Patch App</h1>
+    <p>Secure patch management with blockchain verification and AI classification.</p>
+    <div class="home-actions">
+        <a href="{{ url_for('signup') }}" class="btn">Sign Up</a>
+        <a href="{{ url_for('login') }}" class="btn">Login</a>
+    </div>
+</div>
+</body>
+</html>

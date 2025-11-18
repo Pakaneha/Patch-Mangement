@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .signup-choice { display:flex; gap:12px; margin-bottom:16px; }
+        @media (max-width:600px){ .signup-choice { flex-direction:column; gap:12px; } }
+    </style>
+    <script>
+      function showField(type) {
+        document.getElementById('choose').style.display='none';
+        document.getElementById('form').style.display='block';
+        if(type === 'email') {
+            document.getElementById('email_field').style.display='block';
+            document.getElementById('mobile_field').style.display='none';
+        } else {
+            document.getElementById('email_field').style.display='none';
+            document.getElementById('mobile_field').style.display='block';
+        }
+      }
+
+      function validateSignupForm() {
+        var email = document.forms["signupForm"]["email"].value.trim();
+        var mobile = document.forms["signupForm"]["mobile"].value.trim();
+        var password = document.forms["signupForm"]["password"].value;
+        if (!email && !mobile) {
+            alert("Please enter either email or mobile to sign up.");
+            return false;
+        }
+        if (mobile && !/^\d{10,15}$/.test(mobile.replace(/\D/g,''))) {
+            alert("Please enter a valid mobile number (digits only, 10-15 digits).");
+            return false;
+        }
+        if (!password) {
+            alert("Please enter a password.");
+            return false;
+        }
+        return true;
+      }
+    </script>
+</head>
+<body>
+<div class="container" style="max-width:500px;">
+    <h2>Sign Up</h2>
+    {% if error %}
+        <div class="status-error" style="margin-bottom:13px;">{{ error }}</div>
+    {% endif %}
+    <div id="choose" class="signup-choice">
+      <button type="button" onclick="showField('email')" class="btn">Sign up with Email</button>
+      <button type="button" onclick="showField('mobile')" class="btn">Sign up with Mobile</button>
+    </div>
+    <form method="POST" id="form" name="signupForm" style="display:none;" onsubmit="return validateSignupForm();">
+        <div id="email_field" style="display:none;">
+            <label>Email:</label>
+            <input name="email" type="email" autocomplete="email">
+        </div>
+        <div id="mobile_field" style="display:none;">
+            <label>Mobile Number:</label>
+            <input name="mobile" type="tel" pattern="\d{10,15}" autocomplete="tel" placeholder="Digits only">
+        </div>
+        <label>Password:</label>
+        <input type="password" name="password" required autocomplete="new-password"><br>
+        <button type="submit" class="btn">Sign Up</button>
+    </form>
+    <a href="{{ url_for('login') }}" class="btn" style="margin-top:14px;">Go to Login</a>
+</div>
+</body>
+</html>
